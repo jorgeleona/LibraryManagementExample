@@ -1,0 +1,18 @@
+name: ejercicio2-db
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "1SecurePassword1"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sql-server-data:/var/opt/mssql
+    mem_limit: 2g
+    cpus: 2
+
+volumes:
+  sql-server-data:
+    driver: local
+
