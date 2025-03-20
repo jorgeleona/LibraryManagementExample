@@ -1,1 +1,0 @@
-dotnet run --project LibraryManagement.API.csproj -c Local -v d

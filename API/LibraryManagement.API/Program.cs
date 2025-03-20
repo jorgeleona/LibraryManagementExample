@@ -31,6 +31,8 @@ builder.Services.AddAuthentication("Bearer")
 string localClientCorsPolicy = "LocalClientCorsPolicy";
 string localWebClientOrigin = builder.Configuration["CorsPolicy:Local"] ?? throw new KeyNotFoundException("CorsPolicy:Local not found in configuration");
 
+Console.WriteLine($"Local origin {localWebClientOrigin}");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(localClientCorsPolicy,

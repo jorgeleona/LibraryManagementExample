@@ -26,8 +26,12 @@ const AuthorForm = () => {
 		console.log("to send  :", authorData);
 
 		const authResponse = await fetch(authUrl, {
+			mode: "cors",
 			method: "POST",
 			headers: {
+				
+				"Access-Control-Allow-Origin": "http://localhost:5173",
+				'Access-Control-Allow-Credentials': 'true',
 				"Content-Type": "application/json",
 				Accept: "application/json",
 				"x-api-key": apiKey
@@ -39,8 +43,11 @@ const AuthorForm = () => {
 			const payload = JSON.stringify(authorData);
 
 			const saveResponse = await fetch(saveAuthUrl, {
+				mode: "cors",
 				method: "POST",
 				headers: {
+					"Access-Control-Allow-Origin": "http://localhost:5173",
+					'Access-Control-Allow-Credentials': 'true',
 					"Content-Type": "application/json",
 					Accept: "application/json",
 					"x-api-key": apiKey,
