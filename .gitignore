@@ -1,5 +1,7 @@
+.DS_Store
+/**/*/.DS_Store
 
 API/**/*/bin/
 API/**/*/obj/
-/**/*/.DS_Store
-.DS_Store
+
+API/LibraryManagement.API/appsettings.Local.json

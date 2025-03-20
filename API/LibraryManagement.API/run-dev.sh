@@ -1,1 +1,1 @@
-dotnet run --project LibraryManagement.API.csproj -c Development -v d
+dotnet run --project LibraryManagement.API.csproj -c Local -v d
