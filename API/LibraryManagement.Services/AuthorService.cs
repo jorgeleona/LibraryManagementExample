@@ -29,9 +29,9 @@ public class AuthorService : IAuthorService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Author>> GetAll()
+    public async Task<IEnumerable<Author>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _repository.GetAll();
     }
 
     public Task<Author> GetById(int id)

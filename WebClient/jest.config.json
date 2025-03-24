@@ -1,0 +1,4 @@
+{
+  "roots": ["<rootDir>/src/components/", "<rootDir>/src/services/"],
+  "verbose": true
+}

@@ -1,5 +1,6 @@
 
 using LibraryManagement.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.Data.Repositories;
 
@@ -23,9 +24,9 @@ public class AuthorRepository : IAuthorRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Author>> GetAll()
+    public async Task<IEnumerable<Author>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _context.Authors.Where(auth => auth.IsActive).ToListAsync();
     }
 
     public Task<Author> GetById(int id)

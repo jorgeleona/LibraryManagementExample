@@ -24,13 +24,18 @@ namespace LibraryManagement.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok($"Get all Authors!");
+
+            IEnumerable<Author> authors = await _authorService.GetAll();
+
+            if (authors != null && authors.Any()) return Ok(authors);
+
+            return NotFound();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok($"Get {id}!");
+            return Ok($"Author {id}!");
         }
 
         [HttpPost]
