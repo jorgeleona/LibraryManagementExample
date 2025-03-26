@@ -1,0 +1,38 @@
+ @localhost = http://localhost:5172
+ 
+@baseUrl = {{localhost}}
+@authBaseUrl = {{baseUrl}}/auth
+@apiBaseUrl = {{baseUrl}}/api
+@xapikey = XmpV6v6G0YCc05dasg5XJKf8HL6k6BcteiFa6gh4HGckgBw01IiC3OPPNpl9myjlftk8gQ3rCB69MAoZ47h3KdLjMIeEumCcynKqyp48CtHkcVNQmMfqLd7s9795qnLccbrVNj7snPPipNQbZaQVwDYtkd2sBQ8UqrNxXfyem1wQtpIdYVqvVIzfrcrvDE73bcYNcdy3rDtLYvRQrnPdfeut3Z8lgFwc4MCGgZORVsOWCQfArszpQe5qfdSOWUAe
+
+### Post /auth/auth-token
+# @name login
+POST {{authBaseUrl}}/auth-token HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+x-api-key: {{xapikey}}
+    
+    {
+        "User": "xuser",
+        "Password": "#$$u53r??"
+    }
+
+
+### Get /api/authors
+GET {{apiBaseUrl}}/authors HTTP/1.1
+Content-Type: application/json
+Accept: application/json   
+x-api-key: {{xapikey}}
+Authorization: Bearer {{login.response.body.$}}
+
+### Post /api/author
+POST {{apiBaseUrl}}/authors HTTP/1.1
+Content-Type: application/json
+Accept: application/json   
+x-api-key: {{xapikey}}
+Authorization: Bearer {{login.response.body.$}}
+
+    {
+        "name": "William Blake 2",
+        "dateofbirth": "1757-11-28"
+    }

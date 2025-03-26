@@ -29,9 +29,8 @@ const AuthorForm = () => {
 			mode: "cors",
 			method: "POST",
 			headers: {
-				
 				"Access-Control-Allow-Origin": "http://localhost:5173",
-				'Access-Control-Allow-Credentials': 'true',
+				"Access-Control-Allow-Credentials": "true",
 				"Content-Type": "application/json",
 				Accept: "application/json",
 				"x-api-key": apiKey
@@ -47,7 +46,7 @@ const AuthorForm = () => {
 				method: "POST",
 				headers: {
 					"Access-Control-Allow-Origin": "http://localhost:5173",
-					'Access-Control-Allow-Credentials': 'true',
+					"Access-Control-Allow-Credentials": "true",
 					"Content-Type": "application/json",
 					Accept: "application/json",
 					"x-api-key": apiKey,

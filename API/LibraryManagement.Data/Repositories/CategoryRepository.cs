@@ -1,5 +1,6 @@
 
 using LibraryManagement.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.Data.Repositories;
 
@@ -10,9 +11,11 @@ public class CategoryRepository : ICategoryRepository
     {
         _context = context;
     }
-    public Task<Category> Create(Category entity)
+    public async Task<Category?> Create(Category newEntity)
     {
-        throw new NotImplementedException();
+        _context.Categories.Add(newEntity);
+        int changes = await _context.SaveChangesAsync();
+        return changes > 0 ? newEntity : null;
     }
 
     public Task<bool> Delete(int id)
@@ -20,19 +23,28 @@ public class CategoryRepository : ICategoryRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Category>> GetAll()
+    public async Task<IEnumerable<Category>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _context.Categories.AsNoTracking().Where(auth => auth.IsActive).ToListAsync();
     }
 
-    public Task<Category> GetById(int id)
+    public async Task<Category?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Categories.FindAsync(id);
     }
 
-    public Task<Category> Update(Category entity)
+    public async Task<Category?> Update(Category toUpdate)
     {
-        throw new NotImplementedException();
+        if (!toUpdate.IsValid(out string validMessage)) throw new ArgumentException(validMessage);
+
+        Category? category = await _context.Categories.FindAsync(toUpdate.Id);
+        if (category != null)
+        {
+            category.Name = toUpdate.Name;
+            category.UpdateLastModified();
+        }
+        int changes = await _context.SaveChangesAsync();
+        return changes > 0 ? category : null;
     }
 }
 

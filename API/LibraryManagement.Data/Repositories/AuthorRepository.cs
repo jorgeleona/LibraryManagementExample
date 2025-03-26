@@ -12,11 +12,11 @@ public class AuthorRepository : IAuthorRepository
         _context = context;
     }
 
-    public async Task<Author> Create(Author entity)
+    public async Task<Author?> Create(Author newEntity)
     {
-        _context.Authors.Add(entity);
-        await _context.SaveChangesAsync();
-        return entity;
+        _context.Authors.Add(newEntity);
+        int changes = await _context.SaveChangesAsync();
+        return changes > 0 ? newEntity : null;
     }
 
     public Task<bool> Delete(int id)
@@ -26,17 +26,29 @@ public class AuthorRepository : IAuthorRepository
 
     public async Task<IEnumerable<Author>> GetAll()
     {
-        return await _context.Authors.Where(auth => auth.IsActive).ToListAsync();
+        return await _context.Authors.AsNoTracking().Where(auth => auth.IsActive).ToListAsync();
     }
 
-    public Task<Author> GetById(int id)
+    public async Task<Author?> GetById(Guid authorId)
     {
-        throw new NotImplementedException();
+        return await _context.Authors.FindAsync(authorId);
     }
 
-    public Task<Author> Update(Author entity)
+    public async Task<Author?> Update(Author toUpdate)
     {
-        throw new NotImplementedException();
+        if (!toUpdate.IsValid(out string validMessage)) throw new ArgumentException(validMessage);
+
+        Author? author = await _context.Authors.FindAsync(toUpdate.Id);
+        if (author != null)
+        {
+            author.Name = toUpdate.Name;
+            author.DateOfBirth = toUpdate.DateOfBirth;
+            author.UpdateLastModified();
+        }
+        int changes = await _context.SaveChangesAsync();
+        return changes > 0 ? author : null;
+
     }
+
 }
 

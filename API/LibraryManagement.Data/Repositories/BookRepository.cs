@@ -1,5 +1,6 @@
 
 using LibraryManagement.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.Data.Repositories;
 
@@ -10,29 +11,40 @@ public class BookRepository : IBookRepository
     {
         _context = context;
     }
-    public Task<Book> Create(Book entity)
+    public async Task<Book?> Create(Book newEntity)
+    {
+        _context.Books.Add(newEntity);
+        int changes = await _context.SaveChangesAsync();
+        return changes > 0 ? newEntity : null;
+    }
+
+    public async Task<bool> Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> Delete(int id)
+    public async Task<IEnumerable<Book>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _context.Books.AsNoTracking().Where(auth => auth.IsActive).ToListAsync();
     }
 
-    public Task<IEnumerable<Book>> GetAll()
+    public async Task<Book?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Books.FindAsync(id);
     }
 
-    public Task<Book> GetById(int id)
+    public async Task<Book> Update(Book toUpdate)
     {
-        throw new NotImplementedException();
-    }
+        if (!toUpdate.IsValid(out string validMessage)) throw new ArgumentException(validMessage);
 
-    public Task<Book> Update(Book entity)
-    {
-        throw new NotImplementedException();
+        Book? book = await _context.Books.FindAsync(toUpdate.Id);
+        if (book != null)
+        {
+            book.Title = toUpdate.Title;
+            book.UpdateLastModified();
+        }
+        int changes = await _context.SaveChangesAsync();
+        return changes > 0 ? book : null;
     }
 }
 

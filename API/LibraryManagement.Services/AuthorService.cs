@@ -12,7 +12,7 @@ public class AuthorService : IAuthorService
         _repository = repository;
     }
 
-    public async Task<Author> Create(AddAuthorDto dto)
+    public async Task<Author?> Create(AddAuthorDto dto)
     {
         Author toCreate = new Author
         {
@@ -34,14 +34,14 @@ public class AuthorService : IAuthorService
         return await _repository.GetAll();
     }
 
-    public Task<Author> GetById(int id)
+    public async Task<Author?> GetById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Author> Update(Author entity)
+    public async Task<Author?> Update(Author entity)
     {
-        throw new NotImplementedException();
+        return await _repository.Update(entity);
     }
 }
 
