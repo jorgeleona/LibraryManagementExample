@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using LibraryManagement.Services;
+using LibraryManagement.Model.DTOs;
 using LibraryManagement.Model;
 
 namespace LibraryManagement.API.Controllers
@@ -7,28 +10,43 @@ namespace LibraryManagement.API.Controllers
     [Route("api/books")]
     public class BooksController : ControllerBase
     {
+        private readonly IBookService _bookService;
+
+        public BooksController(IBookService bookService)
+        {
+            _bookService = bookService;
+
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok($"Get all books!");
+            IEnumerable<Book> books = await _bookService.GetAll();
+
+            if (books != null && books.Any()) return Ok(books);
+
+            return NotFound();        
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(string id)
         {
-            return Ok($"Get {id}!");
+            Book? book = await _bookService.GetById( new Guid(id));
+            return book != null ? Ok(book) : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBook([FromBody] Author newAuthor)
+        public async Task<IActionResult> AddBook([FromBody] AddBookDto newBook)
         {
-            return Ok($"Inserting an book");
-        }
+            Book? book = await _bookService.Create(newBook);
+            return book != null ? Ok(book) : new ObjectResult("Entity could not be created"){StatusCode = 500};        }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, [FromBody] Book author)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto dto)
         {
-            return Ok($"Updating an book {id}!");
+            Book? book = await _bookService.Update(dto);
+            return book != null ? Ok(book) : new ObjectResult("Entity could not be updated"){StatusCode = 500};
         }
 
         [HttpDelete("{id}")]

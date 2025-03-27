@@ -2,7 +2,7 @@
 
 namespace LibraryManagement.Model.DTOs;
 
-public class AddBookDto : IAddDto
+public class UpdateBookDto : IUpdateDto
 {
     public required string Title { get; set; }
 

@@ -3,5 +3,5 @@ using LibraryManagement.Model.DTOs;
 
 namespace LibraryManagement.Services;
 
-public interface IAuthorService : ILibraryManagementService<Author, AddAuthorDto> { }
+public interface IAuthorService : ILibraryManagementService<Author, AddAuthorDto, UpdateAuthorDto> { }
 

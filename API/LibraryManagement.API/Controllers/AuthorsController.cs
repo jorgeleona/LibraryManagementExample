@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using LibraryManagement.Services;
 using LibraryManagement.Model.DTOs;
 using LibraryManagement.Model;
+using System.Web.Http.Results;
 
 
 namespace LibraryManagement.API.Controllers
@@ -33,22 +34,26 @@ namespace LibraryManagement.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(string id)
         {
-            return Ok($"Author {id}!");
+            Author? author = await _authorService.GetById( new Guid(id));
+            return author != null ? Ok(author) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAuthor([FromBody] AddAuthorDto newAuthor)
         {
-            Author author = await _authorService.Create(newAuthor);
-            return Ok(author);
+            Author? author = await _authorService.Create(newAuthor);
+            return author != null ? Ok(author) : new ObjectResult("Entity could not be created"){StatusCode = 500};
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAuthor(int id, [FromBody] Author author)
+        public async Task<IActionResult> UpdateAuthor(int id, [FromBody] UpdateAuthorDto toUpdate)
         {
-            return Ok($"Updating an Author {id}!");
+            
+            Author? author = await _authorService.Update(toUpdate);
+            return author != null ? Ok(author) : new ObjectResult("Entity could not be updated"){StatusCode = 500};
+
         }
 
         [HttpDelete("{id}")]

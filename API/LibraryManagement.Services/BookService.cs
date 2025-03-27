@@ -12,9 +12,19 @@ public class BookService : IBookService
         _repository = repository;
     }
 
-    public Task<Book> Create(AddBookDto dto)
+    public async Task<Book?> Create(AddBookDto dto)
     {
-        throw new NotImplementedException();
+        Book toCreate = new Book
+        {
+            Title = dto.Title,
+            PublishedDate = dto.PublishedDate,
+            AuthorId  = new Guid("FE289612-4B76-49D5-B454-EBE56F9CB64A"),
+            Author = null,
+            Categories = new List<Category>(),
+            IsActive = true,
+        };
+
+        return await _repository.Create(toCreate);
     }
 
     public Task<bool> Delete(int id)
@@ -22,19 +32,28 @@ public class BookService : IBookService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Book>> GetAll()
+    public async Task<IEnumerable<Book>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _repository.GetAll();
     }
 
-    public Task<Book> GetById(int id)
+    public async Task<Book?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _repository.GetById(id);
     }
 
-    public Task<Book> Update(Book entity)
+    public async Task<Book?> Update(UpdateBookDto dto)
     {
-        throw new NotImplementedException();
+          Book entity = new Book
+        {
+            Title = dto.Title,
+            PublishedDate = dto.PublishedDate,
+            AuthorId  = new Guid("FE289612-4B76-49D5-B454-EBE56F9CB64A"),
+            Author = null,
+            Categories = new List<Category>(),
+            IsActive = true,
+        };
+        return await _repository.Update(entity);
     }
 }
 

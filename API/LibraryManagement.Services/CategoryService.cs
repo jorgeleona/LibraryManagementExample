@@ -12,29 +12,43 @@ public class CategoryService : ICategoryService
         _repository = repository;
     }
 
-    public Task<Category> Create(AddCategoryDto dto)
+    public async Task<Category?> Create(AddCategoryDto dto)
     {
-        throw new NotImplementedException();
-    }
+        Category toCreate = new Category()
+        {
+            Name = dto.Name,
+            Books = new List<Book>(),
+            IsActive = true,
+        };
+
+        return await _repository.Create(toCreate);
+
+        }
 
     public Task<bool> Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Category>> GetAll()
+    public async  Task<IEnumerable<Category>> GetAll()
     {
-        throw new NotImplementedException();
+        return await _repository.GetAll();
     }
 
-    public Task<Category> GetById(int id)
+    public async Task<Category?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _repository.GetById(id);
     }
 
-    public Task<Category> Update(Category entity)
+    public async Task<Category?> Update(UpdateCategoryDto dto)
     {
-        throw new NotImplementedException();
+         Category entity = new Category()
+        {
+            Name = dto.Name,
+            Books = new List<Book>(),
+            IsActive = true,
+        };
+        return await _repository.Update(entity);
     }
 }
 

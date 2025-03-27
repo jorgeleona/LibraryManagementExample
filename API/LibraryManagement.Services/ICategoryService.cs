@@ -3,5 +3,5 @@ using LibraryManagement.Model.DTOs;
 
 namespace LibraryManagement.Services;
 
-public interface ICategoryService : ILibraryManagementService<Category, AddCategoryDto> { }
+public interface ICategoryService : ILibraryManagementService<Category, AddCategoryDto, UpdateCategoryDto> { }
 

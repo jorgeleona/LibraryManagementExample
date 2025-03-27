@@ -34,14 +34,21 @@ public class AuthorService : IAuthorService
         return await _repository.GetAll();
     }
 
-    public async Task<Author?> GetById(int id)
+    public async Task<Author?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _repository.GetById(id);
     }
 
-    public async Task<Author?> Update(Author entity)
+    public async Task<Author?> Update(UpdateAuthorDto dto)
     {
-        return await _repository.Update(entity);
+        Author toCreate = new Author
+        {
+            Name = dto.Name,
+            DateOfBirth = dto.DateOfBirth,
+            IsActive = true,
+        };
+
+        return await _repository.Update(toCreate);
     }
 }
 
