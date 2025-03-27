@@ -1,5 +1,5 @@
 import { test, expect } from "@jest/globals";
-import { GetAuthToken } from "./services";
+import { GetAuthToken } from "./authServices";
 import Credentials from "./Credentials";
 
 test("Connected Test (Local) - GetAuthToken - Success", async () => {

@@ -19,20 +19,19 @@ x-api-key: {{xapikey}}
 
 
 ### Get /api/authors
-GET {{apiBaseUrl}}/authors HTTP/1.1
+GET {{apiBaseUrl}}/categories HTTP/1.1
 Content-Type: application/json
 Accept: application/json   
 x-api-key: {{xapikey}}
 Authorization: Bearer {{login.response.body.$}}
 
 ### Post /api/author
-POST {{apiBaseUrl}}/authors HTTP/1.1
+POST {{apiBaseUrl}}/categories HTTP/1.1
 Content-Type: application/json
 Accept: application/json   
 x-api-key: {{xapikey}}
 Authorization: Bearer {{login.response.body.$}}
 
     {
-        "name": "William Blake 2",
-        "dateofbirth": "1757-11-28"
+        "name": "Comedy"
     }

@@ -1,4 +1,4 @@
 export default interface Author {
-  Name: String;
-  DateOfBirth: Date;
+	Name: string;
+	DateOfBirth: string;
 }

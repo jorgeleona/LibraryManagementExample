@@ -1,0 +1,12 @@
+.container {
+	border: 1px solid #ccc;
+}
+
+.container input {
+	width: 95%;
+	background-color: darkorange;
+}
+
+.container input::placeholder {
+	color: black;
+}
